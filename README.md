@@ -1,7 +1,16 @@
 # react-tetris
 
 ```
-$ npm install @hiy/react-tetris
+$ touch ~/.npmrc
+vi ~/.npmrc
+
+registry=https://registry.npmjs.org/
+@GITHUB_USERNAME:registry=https://npm.pkg.github.com/
+//npm.pkg.github.com/:_authToken=AUTH_TOKEN
+```
+
+```
+npm install @GITHUB_USERNAME/react-tetris
 ```
 
 ```typescript
