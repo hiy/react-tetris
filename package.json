@@ -1,5 +1,5 @@
 {
-  "name": "react-tetris",
+  "name": "@hiy/react-tetris",
   "version": "1.0.0",
   "description": "",
   "scripts": {
@@ -30,6 +30,8 @@
   "files": [
     "dist"
   ],
-  "types": "dist/index.d.ts"
-
+  "types": "dist/index.d.ts",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/hiy"
+  }
 }
