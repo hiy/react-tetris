@@ -1,5 +1,3 @@
-import React from "react";
-
 export interface FieldProps {
   width: number;
   minoColor: string;

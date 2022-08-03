@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Field } from "..";
 import { useInterval } from "usehooks-ts";
 import { useKeyPressEvent } from "react-use";
-import Tetris from "../lib/Tetris";
+import Tetris from "../../lib/Tetris";
 
 export interface TetrisProps {
   speed: number;
