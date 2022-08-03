@@ -50,17 +50,17 @@ class Mino {
     this.status = 2;
   }
 
-  move(keyCode: string) {
+  move(direction: string) {
     this.prevPos = this.pos;
     this.pos = this.pos.map((hw) => {
       const h = hw[0];
       const w = hw[1];
 
-      if (keyCode == "ArrowDown") {
+      if (direction == "DOWN") {
         return [h + 1, w];
-      } else if (keyCode == "ArrowRight") {
+      } else if (direction == "RIGHT") {
         return [h, w + 1];
-      } else if (keyCode == "ArrowLeft") {
+      } else if (direction == "LEFT") {
         return [h, w - 1];
       }
       return [0, 0];

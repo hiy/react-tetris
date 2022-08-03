@@ -1,19 +1,31 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Field } from "..";
 import { useInterval } from "usehooks-ts";
 import { useKeyPressEvent } from "react-use";
 import Tetris from "../../lib/Tetris";
 
 export interface TetrisProps {
-  speed: number;
-  width: number;
+  fallInterval: number;
+  width: string;
+  divisionSize: { width: number; height: number };
   minoColor: string;
   backgroundColor: string;
   wallColor: string;
 }
 
 const ReactTetris = (props: TetrisProps) => {
-  const [tetris, setTetris] = useState(new Tetris());
+  const gameOption = {
+    divisionSize: props.divisionSize,
+    controlOption: {
+      upKey: "ArrowUp",
+      downKey: "ArrowDown",
+      leftKey: "ArrowLeft",
+      rightKey: "ArrowRight",
+      rotateKey: " ",
+    },
+  };
+
+  const [tetris, setTetris] = useState(new Tetris(gameOption));
   const [fieldData, setFieldData] = useState(tetris.draw());
   const [isGameOver, setIsGameOver] = useState(false);
 
@@ -81,11 +93,11 @@ const ReactTetris = (props: TetrisProps) => {
       fallMino();
       evalLines();
     }
-  }, 60);
+  }, props.fallInterval);
 
   const handleRestart = () => {
     setIsGameOver(false);
-    setTetris(new Tetris());
+    setTetris(new Tetris(gameOption));
   };
 
   return (

@@ -1,6 +1,20 @@
 import Field from "./Field";
 import Mino from "./Mino";
 
+type GameOption = {
+  controlOption: {
+    upKey: string;
+    downKey: string;
+    leftKey: string;
+    rightKey: string;
+    rotateKey: string;
+  };
+  divisionSize: {
+    width: number;
+    height: number;
+  };
+};
+
 class Tetris {
   field: Field;
   currentMino: Mino;
@@ -13,17 +27,15 @@ class Tetris {
     rightKey: string;
     rotateKey: string;
   };
+  divisionSize: {
+    width: number;
+    height: number;
+  };
 
-  constructor() {
-    this.controlOption = {
-      upKey: "ArrowUp",
-      downKey: "ArrowDown",
-      leftKey: "ArrowLeft",
-      rightKey: "ArrowRight",
-      rotateKey: " ",
-    };
-
-    this.field = new Field(this.controlOption);
+  constructor(opts: GameOption) {
+    this.controlOption = opts.controlOption;
+    this.divisionSize = opts.divisionSize;
+    this.field = new Field(this.controlOption, this.divisionSize);
     this.currentMino = new Mino();
     this.isStarted = true;
     this.isPaused = false;
@@ -39,7 +51,14 @@ class Tetris {
 
   moveMino(keyCode: string) {
     if (this.field.isMovable(keyCode, this.currentMino)) {
-      this.currentMino.move(keyCode);
+      if (keyCode == this.controlOption.downKey) {
+        this.currentMino.move("DOWN");
+      } else if (keyCode == this.controlOption.leftKey) {
+        this.currentMino.move("LEFT");
+      } else if (keyCode == this.controlOption.rightKey) {
+        this.currentMino.move("RIGHT");
+      }
+
       return true;
     }
     return false;

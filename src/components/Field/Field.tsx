@@ -1,5 +1,6 @@
 export interface FieldProps {
-  width: number;
+  width: string;
+  divisionSize: { width: number; height: number };
   minoColor: string;
   backgroundColor: string;
   wallColor: string;
@@ -25,8 +26,12 @@ const Field = (props: FieldProps) => {
     return "white";
   };
 
-  const width = props.width;
-
+  const regex = /^([+-]?(?:\d+|\d*\.\d+))([a-z]*|%)$/;
+  const match = props.width.match(regex)!;
+  const width: number = parseFloat(match[1]);
+  const unit: string = match[2];
+  const divW: number = props.divisionSize.width;
+  const divH: number = props.divisionSize.height;
   return (
     <div>
       {props.fieldData.map((data, i) => {
@@ -36,8 +41,8 @@ const Field = (props: FieldProps) => {
               <span
                 style={{
                   backgroundColor: backgroundColor(block),
-                  width: width / 12 + "px",
-                  height: width / 12 + "px",
+                  width: width / divW + unit,
+                  height: width / divW + unit,
                   display: "inline-block",
                 }}></span>
             </>
@@ -47,7 +52,7 @@ const Field = (props: FieldProps) => {
         return (
           <div
             style={{
-              height: width / 12 + "px",
+              height: width / divW + unit,
             }}>
             {tag}
           </div>

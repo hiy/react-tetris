@@ -10,38 +10,36 @@ class Field {
     rotateKey: string;
   };
 
-  constructor(controlOption: {
-    upKey: string;
-    downKey: string;
-    leftKey: string;
-    rightKey: string;
-    rotateKey: string;
-  }) {
+  constructor(
+    controlOption: {
+      upKey: string;
+      downKey: string;
+      leftKey: string;
+      rightKey: string;
+      rotateKey: string;
+    },
+    divisionSize: { width: number; height: number }
+  ) {
     this.controlOption = controlOption;
-    this.data = [
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    ];
+
+    const row = [];
+    for (let i = 0; i < divisionSize.width; i++) {
+      if (i == 0 || i == divisionSize.width - 1) {
+        row.push(1);
+      } else {
+        row.push(0);
+      }
+    }
+    this.data = [];
+    for (let i = 0; i < divisionSize.height; i++) {
+      if (i == divisionSize.height - 1) {
+        const bottomRow = Array(divisionSize.width);
+        bottomRow.fill(1);
+        this.data.push(bottomRow);
+      } else {
+        this.data.push(Array.from(row));
+      }
+    }
   }
 
   draw(mino: Mino) {
@@ -85,7 +83,7 @@ class Field {
     for (const hw of nextPos) {
       const h = hw[0];
       const w = hw[1];
-      if ([0, 2].includes(this.data[h][w])) {
+      if (this.data[h] && [0, 2].includes(this.data[h][w])) {
         continue;
       } else {
         return false;
