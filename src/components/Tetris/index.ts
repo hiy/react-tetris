@@ -1,1 +1,1 @@
-export { default } from "./Tetris";
+export { default } from './Tetris'

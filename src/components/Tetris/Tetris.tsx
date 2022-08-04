@@ -1,104 +1,85 @@
-import { useState } from "react";
-import { Field } from "..";
-import { useInterval } from "usehooks-ts";
-import { useKeyPressEvent } from "react-use";
-import Tetris from "../../lib/Tetris";
+import { useState } from 'react'
+import { Field } from '..'
+import { useInterval } from 'usehooks-ts'
+import { useKeyPressEvent } from 'react-use'
+import Tetris from '../../lib/Tetris'
 
 export interface TetrisProps {
-  fallInterval: number;
-  width: string;
-  divisionSize: { width: number; height: number };
-  minoColor: string;
-  backgroundColor: string;
-  wallColor: string;
+  fallInterval: number
+  width: string
+  divisionSize: { width: number; height: number }
+  minoColor: string
+  backgroundColor: string
+  wallColor: string
 }
 
 const ReactTetris = (props: TetrisProps) => {
   const gameOption = {
     divisionSize: props.divisionSize,
     controlOption: {
-      upKey: "ArrowUp",
-      downKey: "ArrowDown",
-      leftKey: "ArrowLeft",
-      rightKey: "ArrowRight",
-      rotateKey: " ",
+      upKey: 'ArrowUp',
+      downKey: 'ArrowDown',
+      leftKey: 'ArrowLeft',
+      rightKey: 'ArrowRight',
+      rotateKey: ' ',
     },
-  };
+  }
 
-  const [tetris, setTetris] = useState(new Tetris(gameOption));
-  const [fieldData, setFieldData] = useState(tetris.draw());
-  const [isGameOver, setIsGameOver] = useState(false);
+  const [tetris, setTetris] = useState(new Tetris(gameOption))
+  const [fieldData, setFieldData] = useState(tetris.draw())
+  const [isGameOver, setIsGameOver] = useState(false)
 
   const moveMino = (e: KeyboardEvent) => {
-    tetris.moveMino(e.code);
-    const newFieldData = tetris.draw();
-    setFieldData([...newFieldData]);
-  };
+    tetris.moveMino(e.code)
+    const newFieldData = tetris.draw()
+    setFieldData([...newFieldData])
+  }
 
   const fallMino = () => {
     if (tetris.fallMino()) {
-      const newFieldData = tetris.draw();
+      const newFieldData = tetris.draw()
 
-      setFieldData([...newFieldData]);
-      return;
+      setFieldData([...newFieldData])
+      return
     }
 
-    tetris.fixMino();
-    const newFieldData = tetris.draw();
-    setFieldData([...newFieldData]);
+    tetris.fixMino()
+    const newFieldData = tetris.draw()
+    setFieldData([...newFieldData])
 
-    tetris.createMino();
-  };
+    tetris.createMino()
+  }
 
   const rotateMino = () => {
-    tetris.rotateMino();
-    const newFieldData = tetris.draw();
-    setFieldData([...newFieldData]);
-  };
+    tetris.rotateMino()
+    const newFieldData = tetris.draw()
+    setFieldData([...newFieldData])
+  }
 
   const evalLines = () => {
-    tetris.evalLines();
-    const newFieldData = tetris.draw();
-    setFieldData([...newFieldData]);
-  };
+    tetris.evalLines()
+    const newFieldData = tetris.draw()
+    setFieldData([...newFieldData])
+  }
 
-  useKeyPressEvent(
-    " ", // space
-    (e) => rotateMino(),
-    (e) => {}
-  );
-
-  useKeyPressEvent(
-    "ArrowDown",
-    (e) => moveMino(e),
-    (e) => {}
-  );
-
-  useKeyPressEvent(
-    "ArrowLeft",
-    (e) => moveMino(e),
-    (e) => {}
-  );
-
-  useKeyPressEvent(
-    "ArrowRight",
-    (e) => moveMino(e),
-    (e) => {}
-  );
+  useKeyPressEvent(' ', () => rotateMino())
+  useKeyPressEvent('ArrowDown', (e) => moveMino(e))
+  useKeyPressEvent('ArrowLeft', (e) => moveMino(e))
+  useKeyPressEvent('ArrowRight', (e) => moveMino(e))
 
   useInterval(() => {
     if (tetris.isGameOver()) {
-      setIsGameOver(true);
+      setIsGameOver(true)
     } else {
-      fallMino();
-      evalLines();
+      fallMino()
+      evalLines()
     }
-  }, props.fallInterval);
+  }, props.fallInterval)
 
   const handleRestart = () => {
-    setIsGameOver(false);
-    setTetris(new Tetris(gameOption));
-  };
+    setIsGameOver(false)
+    setTetris(new Tetris(gameOption))
+  }
 
   return (
     <>
@@ -112,7 +93,7 @@ const ReactTetris = (props: TetrisProps) => {
         <Field {...props} fieldData={fieldData} />
       )}
     </>
-  );
-};
+  )
+}
 
-export default ReactTetris;
+export default ReactTetris

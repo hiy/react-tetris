@@ -1,100 +1,100 @@
-import Field from "./Field";
-import Mino from "./Mino";
+import Field from './Field'
+import Mino from './Mino'
 
 type GameOption = {
   controlOption: {
-    upKey: string;
-    downKey: string;
-    leftKey: string;
-    rightKey: string;
-    rotateKey: string;
-  };
+    upKey: string
+    downKey: string
+    leftKey: string
+    rightKey: string
+    rotateKey: string
+  }
   divisionSize: {
-    width: number;
-    height: number;
-  };
-};
+    width: number
+    height: number
+  }
+}
 
 class Tetris {
-  field: Field;
-  currentMino: Mino;
-  isStarted: Boolean;
-  isPaused: Boolean;
+  field: Field
+  currentMino: Mino
+  isStarted: boolean
+  isPaused: boolean
   controlOption: {
-    upKey: string;
-    downKey: string;
-    leftKey: string;
-    rightKey: string;
-    rotateKey: string;
-  };
+    upKey: string
+    downKey: string
+    leftKey: string
+    rightKey: string
+    rotateKey: string
+  }
   divisionSize: {
-    width: number;
-    height: number;
-  };
-
-  constructor(opts: GameOption) {
-    this.controlOption = opts.controlOption;
-    this.divisionSize = opts.divisionSize;
-    this.field = new Field(this.controlOption, this.divisionSize);
-    this.currentMino = new Mino();
-    this.isStarted = true;
-    this.isPaused = false;
+    width: number
+    height: number
   }
 
-  start() {}
+  constructor(opts: GameOption) {
+    this.controlOption = opts.controlOption
+    this.divisionSize = opts.divisionSize
+    this.field = new Field(this.controlOption, this.divisionSize)
+    this.currentMino = new Mino()
+    this.isStarted = true
+    this.isPaused = false
+  }
 
-  pause() {}
+  // start() {}
+
+  // pause() {}
 
   draw() {
-    return this.field.draw(this.currentMino);
+    return this.field.draw(this.currentMino)
   }
 
   moveMino(keyCode: string) {
     if (this.field.isMovable(keyCode, this.currentMino)) {
       if (keyCode == this.controlOption.downKey) {
-        this.currentMino.move("DOWN");
+        this.currentMino.move('DOWN')
       } else if (keyCode == this.controlOption.leftKey) {
-        this.currentMino.move("LEFT");
+        this.currentMino.move('LEFT')
       } else if (keyCode == this.controlOption.rightKey) {
-        this.currentMino.move("RIGHT");
+        this.currentMino.move('RIGHT')
       }
 
-      return true;
+      return true
     }
-    return false;
+    return false
   }
 
   fallMino() {
     if (this.field.isMovable(this.controlOption.downKey, this.currentMino)) {
-      this.currentMino.fall();
-      return true;
+      this.currentMino.fall()
+      return true
     }
-    return false;
+    return false
   }
 
   rotateMino() {
     if (this.field.isMovable(this.controlOption.rotateKey, this.currentMino)) {
-      this.currentMino.rotate();
-      return true;
+      this.currentMino.rotate()
+      return true
     }
-    return false;
+    return false
   }
 
   fixMino() {
-    this.currentMino.fix();
+    this.currentMino.fix()
   }
 
   createMino() {
-    this.currentMino = new Mino();
+    this.currentMino = new Mino()
   }
 
   evalLines() {
-    this.field.evalLines();
+    this.field.evalLines()
   }
 
   isGameOver() {
-    return this.field.isGameOver();
+    return this.field.isGameOver()
   }
 }
 
-export default Tetris;
+export default Tetris

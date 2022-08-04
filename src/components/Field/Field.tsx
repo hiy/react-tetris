@@ -1,37 +1,37 @@
 export interface FieldProps {
-  width: string;
-  divisionSize: { width: number; height: number };
-  minoColor: string;
-  backgroundColor: string;
-  wallColor: string;
-  fieldData: number[][];
+  width: string
+  divisionSize: { width: number; height: number }
+  minoColor: string
+  backgroundColor: string
+  wallColor: string
+  fieldData: number[][]
 }
 
-const WallArea = 1;
-const BackGroundArea = 0;
-const MinoArea = 2;
+const WallArea = 1
+const BackGroundArea = 0
+const MinoArea = 2
 
 const Field = (props: FieldProps) => {
   const backgroundColor = (block: number) => {
     if (block == WallArea) {
-      return props.wallColor;
+      return props.wallColor
     } else if (block == BackGroundArea) {
-      return "white";
+      return 'white'
     } else if (block == MinoArea) {
-      return props.minoColor;
+      return props.minoColor
     } else if (block == 3) {
-      return "gray";
+      return 'gray'
     }
 
-    return "white";
-  };
+    return 'white'
+  }
 
-  const regex = /^([+-]?(?:\d+|\d*\.\d+))([a-z]*|%)$/;
-  const match = props.width.match(regex)!;
-  const width: number = parseFloat(match[1]);
-  const unit: string = match[2];
-  const divW: number = props.divisionSize.width;
-  const divH: number = props.divisionSize.height;
+  const regex = /^([+-]?(?:\d+|\d*\.\d+))([a-z]*|%)$/
+  const match = props.width.match(regex)
+  if (!match) return
+  const width: number = parseFloat(match[1])
+  const unit: string = match[2]
+  const divW: number = props.divisionSize.width
   return (
     <div>
       {props.fieldData.map((data, i) => {
@@ -43,23 +43,26 @@ const Field = (props: FieldProps) => {
                   backgroundColor: backgroundColor(block),
                   width: width / divW + unit,
                   height: width / divW + unit,
-                  display: "inline-block",
-                }}></span>
+                  display: 'inline-block',
+                }}
+              ></span>
             </>
-          );
-        });
+          )
+        })
 
         return (
           <div
+            key={i}
             style={{
               height: width / divW + unit,
-            }}>
+            }}
+          >
             {tag}
           </div>
-        );
+        )
       })}
     </div>
-  );
-};
+  )
+}
 
-export default Field;
+export default Field
